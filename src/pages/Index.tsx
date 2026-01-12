@@ -9,10 +9,18 @@ import BlogSection from '@/components/BlogSection';
 import AchievementsSection from '@/components/AchievementsSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
+import LoadingScreen from '@/components/LoadingScreen';
+import UFOFollower from '@/components/UFOFollower';
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* Loading Animation */}
+      <LoadingScreen />
+      
+      {/* UFO that follows scroll */}
+      <UFOFollower />
+      
       {/* Animated Star Background */}
       <StarField />
       
