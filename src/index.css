@@ -205,3 +205,11 @@
     display: none;
   }
 }
+
+/* Custom UFO Cursor - Hide default cursor on desktop */
+@media (min-width: 768px) {
+  body,
+  body * {
+    cursor: none !important;
+  }
+}
