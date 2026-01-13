@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { Mail, Linkedin, Github, Send, MapPin, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 import { siteConfig } from '../data/siteContent';
 
 const contactLinks = [
@@ -35,29 +36,54 @@ const contactLinks = [
 const ContactSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    subject: '',
     message: '',
   });
   const [sending, setSending] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
 
-    const subject = `Portfolio Contact from ${formData.name}`;
-    const body = `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`;
+    const { serviceId, templateId, publicKey } = siteConfig.emailJs;
 
-    window.location.href = `mailto:${siteConfig.personal.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    if (!serviceId || !templateId || !publicKey || serviceId === 'your_service_id') {
+      toast.error('Configuration Missing', {
+        description: "Please set up your EmailJS keys in src/data/siteContent.ts",
+      });
+      setSending(false);
+      return;
+    }
 
-    toast({
-      title: 'Message Sent! 🚀',
-      description: "Thanks for reaching out. I'll get back to you soon!",
-    });
+    const templateParams = {
+      name: formData.name,
+      email: formData.email,
+      title: formData.subject || 'Portfolio Contact', // Maps to {{title}} in EmailJS subject
+      message: formData.message,
+    };
 
-    setSending(false);
+    emailjs
+      .send(serviceId, templateId, templateParams, publicKey)
+      .then(
+        () => {
+          toast.success('Message Sent! 🚀', {
+            description: "Thanks for reaching out. I'll get back to you soon!",
+          });
+          setFormData({ name: '', email: '', subject: '', message: '' });
+        },
+        (error) => {
+          console.error('FAILED...', error);
+          toast.error('Message Verification Failed', {
+            description: "Could not send message. Please try again later.",
+          });
+        }
+      )
+      .finally(() => {
+        setSending(false);
+      });
   };
 
   return (
@@ -135,7 +161,7 @@ const ContactSection = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <form onSubmit={handleEmailClick} className="glass-card p-8 space-y-6">
+            <form onSubmit={handleSubmit} className="glass-card p-8 space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
                   Name
@@ -161,6 +187,19 @@ const ContactSection = () => {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
+                  className="bg-muted/50 border-border focus:border-primary"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">
+                  Subject <span className="text-muted-foreground text-xs ml-1">(Optional)</span>
+                </label>
+                <Input
+                  id="subject"
+                  placeholder="What is this about?"
+                  value={formData.subject}
+                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   className="bg-muted/50 border-border focus:border-primary"
                 />
               </div>

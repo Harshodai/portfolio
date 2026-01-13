@@ -8,14 +8,14 @@ export const siteConfig = {
     location: 'Hyderabad, India',
     resumePath: '/Kolluru_Harshodai_Resume.pdf',
   },
-  
+
   // Social Links (used in Hero, Footer, Contact)
   socials: {
     github: 'https://github.com/Harshodai',
     linkedin: 'https://linkedin.com/in/harshodai',
     medium: 'https://medium.com/@Harshodai',
   },
-  
+
   // Navigation items
   navigation: [
     { name: 'Home', href: '#home' },
@@ -27,14 +27,14 @@ export const siteConfig = {
     { name: 'Blog', href: '#blog' },
     { name: 'Contact', href: '#contact' },
   ],
-  
+
   // Hero section
   hero: {
     greeting: 'Welcome to my universe',
     roles: ['Software Engineer', 'Data Engineer', 'AI Innovator', 'Problem Solver'],
     description: 'Building scalable data pipelines and AI-powered solutions to solve complex real-world problems. Passionate about turning data into actionable insights and creating intelligent systems.',
   },
-  
+
   // About section
   about: {
     sectionTitle: 'The Astronaut',
@@ -51,7 +51,7 @@ export const siteConfig = {
       { label: 'Awards', value: '3', icon: 'Award' },
     ],
   },
-  
+
   // Experience section
   experiences: [
     {
@@ -91,38 +91,38 @@ export const siteConfig = {
       color: 'tertiary',
     },
   ],
-  
+
   // Skills section
   skillCategories: [
     { name: 'Languages', color: 'primary', skills: ['Python', 'SQL', 'Java'] },
-    { name: 'Big Data', color: 'secondary', skills: ['Spark', 'Kafka', 'Airflow', 'Apache Flink', 'Apache Iceberg'] },
+    { name: 'Big Data', color: 'secondary', skills: ['Spark', 'Kafka', 'Airflow', 'Trino', 'Apache Flink', 'Apache Iceberg'] },
     { name: 'Databases', color: 'tertiary', skills: ['PostgreSQL', 'MongoDB', 'Elasticsearch'] },
     { name: 'Cloud & DevOps', color: 'quaternary', skills: ['AWS', 'Terraform'] },
     { name: 'AI & ML', color: 'primary', skills: ['LLMs', 'LangChain'] },
   ],
-  
+
   // Achievements section
   achievements: [
-     { 
-        icon: 'Award', 
-        title: 'Phenomenal CRISP Award at Phenom', 
-        description: 'Awarded for exceptional problem-solving skills and delivering high-impact features.', 
-        color: 'primary' 
-     },
-     { 
-        icon: 'Star', 
-        title: 'Star Performer at Tiger Analytics', 
-        description: 'Recognized for consistent high performance and contribution to team success.', 
-        color: 'secondary' 
-     },
-     { 
-        icon: 'Trophy', 
-        title: 'Hackathon Winner', 
-        description: 'Won 1st place in the internal innovation hackathon for building an AI-powered documentation assistant.', 
-        color: 'tertiary' 
-     },
+    {
+      icon: 'Award',
+      title: 'Phenomenal CRISP Award at Phenom',
+      description: 'Awarded for exceptional problem-solving skills and delivering high-impact features.',
+      color: 'primary'
+    },
+    {
+      icon: 'Star',
+      title: 'Star Performer at Tiger Analytics',
+      description: 'Recognized for consistent high performance and contribution to team success.',
+      color: 'secondary'
+    },
+    {
+      icon: 'Trophy',
+      title: 'Hackathon Winner',
+      description: 'Won 1st place in the internal innovation hackathon for building an AI-powered documentation assistant.',
+      color: 'tertiary'
+    },
   ],
-  
+
   // Contact section
   contact: {
     sectionTitle: 'Ground Control',
@@ -130,9 +130,15 @@ export const siteConfig = {
     headline: 'Ready to Launch Your Next Project?',
     description: 'Whether you have a project in mind, want to discuss the latest tech, or just want to say hi, my inbox is always open.',
   },
-  
+
   // Footer
   footer: {
     copyright: 'Made with ❤️ by Harshodai Kolluru',
+  },
+  // EmailJS Configuration
+  emailJs: {
+    serviceId: 'service_yo5fr9w',
+    templateId: 'template_m693kkn',
+    publicKey: '-ZNMA3oA7izCcB-A9',
   },
 };

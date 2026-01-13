@@ -10,20 +10,20 @@ const UFOFollower = () => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Optimized spring physics - faster response, less lag
-  const springConfig = { stiffness: 300, damping: 25, mass: 0.1 };
+  // Optimized spring physics
+  const springConfig = { stiffness: 400, damping: 28, mass: 0.1 }; // Slightly stiffer for better responsiveness
   const x = useSpring(mouseX, springConfig);
   const y = useSpring(mouseY, springConfig);
 
   // Track mouse velocity for tilt effect
   const velocityX = useMotionValue(0);
-  const tilt = useTransform(velocityX, [-500, 0, 500], [-15, 0, 15]);
+  const tilt = useTransform(velocityX, [-500, 0, 500], [-10, 0, 10]); // Reduced tilt range for stability
   const smoothTilt = useSpring(tilt, { stiffness: 200, damping: 30 });
 
   // Throttled hover check
   const checkInteractive = useCallback((target: HTMLElement) => {
     const now = Date.now();
-    if (now - lastHoverCheck.current < 100) return; // Increased throttle to 100ms
+    if (now - lastHoverCheck.current < 50) return; // 50ms throttle for better responsiveness without lag
     lastHoverCheck.current = now;
 
     const isInteractive = target.closest('a, button, [role="button"], input, textarea, select, [data-interactive]');
@@ -37,25 +37,28 @@ const UFOFollower = () => {
 
     let lastX = 0;
     let lastTime = Date.now();
+    let rafId: number;
 
     const handleMouseMove = (e: MouseEvent) => {
-      const currentTime = Date.now();
-      const deltaTime = currentTime - lastTime;
+      // Use requestAnimationFrame for smoother updates
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const currentTime = Date.now();
+        const deltaTime = currentTime - lastTime;
 
-      // Throttle velocity calculation
-      if (deltaTime > 16) { // ~60fps cap
-        const velocity = (e.clientX - lastX) / deltaTime * 100;
-        velocityX.set(velocity);
-        lastX = e.clientX;
-        lastTime = currentTime;
-      }
+        if (deltaTime > 16) {
+          const velocity = (e.clientX - lastX) / deltaTime * 100;
+          velocityX.set(velocity);
+          lastX = e.clientX;
+          lastTime = currentTime;
+        }
 
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-      if (!isVisible) setIsVisible(true);
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+        if (!isVisible) setIsVisible(true);
 
-      // Throttled check for interactive elements
-      checkInteractive(e.target as HTMLElement);
+        checkInteractive(e.target as HTMLElement);
+      });
     };
 
     const handleMouseLeave = () => setIsVisible(false);
@@ -69,6 +72,7 @@ const UFOFollower = () => {
       window.removeEventListener('mousemove', handleMouseMove);
       document.body.removeEventListener('mouseleave', handleMouseLeave);
       document.body.removeEventListener('mouseenter', handleMouseEnter);
+      cancelAnimationFrame(rafId);
     };
   }, [mouseX, mouseY, velocityX, isVisible, checkInteractive]);
 
@@ -80,7 +84,7 @@ const UFOFollower = () => {
         y,
         translateX: '-50%',
         translateY: '-50%',
-        willChange: 'transform',
+        willChange: 'transform', // HINT BROWSER FOR COMPOSITOR
       }}
       animate={{ opacity: isVisible ? 1 : 0 }}
       transition={{ duration: 0.15 }}
@@ -95,12 +99,13 @@ const UFOFollower = () => {
         }}
         className="relative"
       >
-        {/* UFO Emoji - Removed expensive filters */}
+        {/* UFO Emoji */}
         <span
           className="text-3xl block"
           style={{
             transform: isHoveringInteractive ? 'scale(1.1)' : 'scale(1)',
             transition: 'transform 0.2s ease-out',
+            backfaceVisibility: 'hidden', // PREVENT BLUR
           }}
         >
           🛸
@@ -113,6 +118,7 @@ const UFOFollower = () => {
             opacity: isHoveringInteractive ? 0.8 : 0.5,
             height: isHoveringInteractive ? 35 : 20,
             width: isHoveringInteractive ? 28 : 20,
+            pointerEvents: 'none',
           }}
         >
           <div
@@ -125,50 +131,29 @@ const UFOFollower = () => {
           />
         </div>
 
-        {/* Sparkle Particles - Reduced count */}
-        {[0, 1, 2].map((i) => (
+        {/* Sparkle Particles - Removed animate prop for performance, used CSS animation if needed or keep static */}
+        {/* Keeping reduced count but optimizing */}
+        {[0, 1].map((i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 rounded-full"
             style={{
-              left: `${20 + i * 25}%`,
+              left: `${30 + i * 40}%`,
               top: '110%',
               backgroundColor: i % 2 === 0 ? 'hsl(var(--primary))' : 'hsl(var(--secondary))',
             }}
             animate={{
-              y: [0, isHoveringInteractive ? 25 : 15, 0],
+              y: [0, 15, 0],
               opacity: [0, 0.8, 0],
             }}
             transition={{
-              duration: 0.8,
+              duration: 1,
               repeat: Infinity,
-              delay: i * 0.2,
-              ease: 'easeOut',
+              delay: i * 0.3,
+              ease: 'linear',
             }}
           />
         ))}
-
-        {/* Ring effect when hovering interactive elements */}
-        {isHoveringInteractive && (
-          <motion.div
-            className="absolute rounded-full border border-primary/40"
-            initial={{ scale: 1, opacity: 0.6 }}
-            animate={{ scale: 2, opacity: 0 }}
-            transition={{
-              duration: 0.6,
-              repeat: Infinity,
-              ease: 'easeOut',
-            }}
-            style={{
-              left: '50%',
-              top: '50%',
-              translateX: '-50%',
-              translateY: '-50%',
-              width: 35,
-              height: 35,
-            }}
-          />
-        )}
       </motion.div>
     </motion.div>
   );
