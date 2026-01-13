@@ -137,8 +137,8 @@ export const siteConfig = {
   },
   // EmailJS Configuration
   emailJs: {
-    serviceId: 'service_yo5fr9w',
-    templateId: 'template_m693kkn',
-    publicKey: '-ZNMA3oA7izCcB-A9',
+    serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID || '',
+    templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '',
+    publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '',
   },
 };
