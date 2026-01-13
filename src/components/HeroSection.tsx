@@ -1,13 +1,7 @@
 import { motion } from 'framer-motion';
 import { ChevronDown, Github, Linkedin, Mail, Download } from 'lucide-react';
 import { useEffect, useState } from 'react';
-
-const roles = [
-  'Software Engineer',
-  'Data Engineer',
-  'AI Innovator',
-  'Problem Solver',
-];
+import { siteConfig } from '../data/siteContent';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -37,7 +31,7 @@ const HeroSection = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % roles.length);
+      setRoleIndex((prev) => (prev + 1) % siteConfig.hero.roles.length);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
@@ -46,12 +40,12 @@ const HeroSection = () => {
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Nebula Background */}
       <div className="absolute inset-0 nebula-bg" />
-      
+
       {/* Enhanced Floating Elements with More Dynamic Animations */}
       <motion.div
         className="absolute top-20 left-10 w-32 h-32 rounded-full bg-primary/10 blur-3xl"
-        animate={{ 
-          y: [0, -30, 0], 
+        animate={{
+          y: [0, -30, 0],
           x: [0, 20, 0],
           scale: [1, 1.1, 1],
         }}
@@ -59,8 +53,8 @@ const HeroSection = () => {
       />
       <motion.div
         className="absolute bottom-40 right-20 w-48 h-48 rounded-full bg-secondary/10 blur-3xl"
-        animate={{ 
-          y: [0, 20, 0], 
+        animate={{
+          y: [0, 20, 0],
           x: [0, -30, 0],
           scale: [1, 1.2, 1],
         }}
@@ -68,7 +62,7 @@ const HeroSection = () => {
       />
       <motion.div
         className="absolute top-1/3 right-1/4 w-24 h-24 rounded-full bg-accent/10 blur-2xl"
-        animate={{ 
+        animate={{
           scale: [1, 1.3, 1],
           opacity: [0.5, 0.8, 0.5],
         }}
@@ -77,22 +71,22 @@ const HeroSection = () => {
       {/* Additional floating orbs */}
       <motion.div
         className="absolute top-1/2 left-1/4 w-16 h-16 rounded-full bg-primary/20 blur-2xl"
-        animate={{ 
-          y: [0, -40, 0], 
+        animate={{
+          y: [0, -40, 0],
           rotate: [0, 180, 360],
         }}
         transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
       />
       <motion.div
         className="absolute bottom-1/4 right-1/3 w-20 h-20 rounded-full bg-secondary/15 blur-2xl"
-        animate={{ 
-          x: [0, 30, 0], 
+        animate={{
+          x: [0, 30, 0],
           scale: [1, 1.4, 1],
         }}
         transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
       />
 
-      <motion.div 
+      <motion.div
         className="container mx-auto px-6 text-center relative z-10"
         variants={containerVariants}
         initial="hidden"
@@ -103,7 +97,7 @@ const HeroSection = () => {
           variants={itemVariants}
           className="text-muted-foreground text-lg mb-4"
         >
-          Welcome to my universe
+          {siteConfig.hero.greeting}
         </motion.p>
 
         {/* Name with enhanced animation */}
@@ -111,7 +105,7 @@ const HeroSection = () => {
           variants={itemVariants}
           className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6"
         >
-          <motion.span 
+          <motion.span
             className="text-gradient inline-block"
             animate={{
               backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
@@ -125,7 +119,7 @@ const HeroSection = () => {
               backgroundSize: '200% 200%',
             }}
           >
-            Harshodai Kolluru
+            {siteConfig.personal.name}
           </motion.span>
         </motion.h1>
 
@@ -142,7 +136,7 @@ const HeroSection = () => {
             transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="text-xl md:text-2xl text-muted-foreground"
           >
-            {roles[roleIndex]}
+            {siteConfig.hero.roles[roleIndex]}
           </motion.p>
         </motion.div>
 
@@ -151,8 +145,7 @@ const HeroSection = () => {
           variants={itemVariants}
           className="text-muted-foreground max-w-2xl mx-auto mb-10 text-lg"
         >
-          Building scalable data pipelines and AI-powered solutions at JP Morgan Chase.
-          Turning complex data challenges into elegant engineering solutions.
+          {siteConfig.hero.description}
         </motion.p>
 
         {/* CTA Buttons with Resume Download */}
@@ -169,7 +162,7 @@ const HeroSection = () => {
             Explore My Work
           </motion.a>
           <motion.a
-            href="/Kolluru_Harshodai_Resume.pdf"
+            href={siteConfig.personal.resumePath}
             download="Kolluru_Harshodai_Resume.pdf"
             whileHover={{ scale: 1.05, boxShadow: '0 0 25px hsl(var(--secondary) / 0.4)' }}
             whileTap={{ scale: 0.95 }}
@@ -194,7 +187,7 @@ const HeroSection = () => {
           className="flex justify-center gap-6"
         >
           <motion.a
-            href="https://github.com/Harshodai"
+            href={siteConfig.socials.github}
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.1, y: -2 }}
@@ -203,7 +196,7 @@ const HeroSection = () => {
             <Github size={24} />
           </motion.a>
           <motion.a
-            href="https://linkedin.com/in/harshodai"
+            href={siteConfig.socials.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.1, y: -2 }}
@@ -212,7 +205,7 @@ const HeroSection = () => {
             <Linkedin size={24} />
           </motion.a>
           <motion.a
-            href="mailto:kharshaengineer@gmail.com"
+            href={`mailto:${siteConfig.personal.email}`}
             whileHover={{ scale: 1.1, y: -2 }}
             className="p-3 rounded-full glass-card text-muted-foreground hover:text-foreground transition-colors"
           >

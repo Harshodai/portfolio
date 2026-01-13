@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Rocket, Heart } from 'lucide-react';
+import { siteConfig } from '../data/siteContent';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -15,18 +16,18 @@ const Footer = () => {
             whileHover={{ scale: 1.05 }}
           >
             <Rocket className="w-5 h-5 text-primary" />
-            <span className="font-display font-bold text-lg text-foreground">Harshodai</span>
+            <span className="font-display font-bold text-lg text-foreground">{siteConfig.personal.firstName}</span>
           </motion.a>
 
           {/* Copyright */}
           <p className="text-sm text-muted-foreground flex items-center gap-1">
-            © {currentYear} Made with <Heart size={14} className="text-primary" /> by Harshodai Kolluru
+            © {currentYear} {siteConfig.footer.copyright.replace('Made with ❤️ by Harshodai Kolluru', '')} Made with <Heart size={14} className="text-primary" /> by {siteConfig.personal.name}
           </p>
 
           {/* Quick Links */}
           <div className="flex items-center gap-6">
             <a
-              href="https://github.com/Harshodai"
+              href={siteConfig.socials.github}
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors text-sm"
@@ -34,7 +35,7 @@ const Footer = () => {
               GitHub
             </a>
             <a
-              href="https://linkedin.com/in/harshodai"
+              href={siteConfig.socials.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors text-sm"
@@ -42,7 +43,7 @@ const Footer = () => {
               LinkedIn
             </a>
             <a
-              href="https://medium.com/@Harshodai"
+              href={siteConfig.socials.medium}
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors text-sm"

@@ -6,27 +6,28 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { siteConfig } from '../data/siteContent';
 
 const contactLinks = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'kharshaengineer@gmail.com',
-    href: 'mailto:kharshaengineer@gmail.com',
+    value: siteConfig.personal.email,
+    href: `mailto:${siteConfig.personal.email}`,
     color: 'primary',
   },
   {
     icon: Linkedin,
     label: 'LinkedIn',
-    value: 'linkedin.com/in/harshodai',
-    href: 'https://linkedin.com/in/harshodai',
+    value: siteConfig.socials.linkedin.replace('https://', ''),
+    href: siteConfig.socials.linkedin,
     color: 'secondary',
   },
   {
     icon: Github,
     label: 'GitHub',
-    value: 'github.com/Harshodai',
-    href: 'https://github.com/Harshodai',
+    value: siteConfig.socials.github.replace('https://', ''),
+    href: siteConfig.socials.github,
     color: 'accent',
   },
 ];
@@ -46,15 +47,16 @@ const ContactSection = () => {
     e.preventDefault();
     setSending(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const subject = `Portfolio Contact from ${formData.name}`;
+    const body = `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`;
+
+    window.location.href = `mailto:${siteConfig.personal.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
     toast({
       title: 'Message Sent! 🚀',
       description: "Thanks for reaching out. I'll get back to you soon!",
     });
 
-    setFormData({ name: '', email: '', message: '' });
     setSending(false);
   };
 
@@ -71,9 +73,9 @@ const ContactSection = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
-            <span className="text-gradient">Ground Control</span>
+            <span className="text-gradient">{siteConfig.contact.sectionTitle}</span>
           </h2>
-          <p className="text-muted-foreground text-lg">Let's connect and build something amazing</p>
+          <p className="text-muted-foreground text-lg">{siteConfig.contact.sectionSubtitle}</p>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
@@ -85,15 +87,14 @@ const ContactSection = () => {
           >
             <div className="flex items-center gap-2 text-muted-foreground mb-6">
               <MapPin size={18} className="text-primary" />
-              <span>Hyderabad, India</span>
+              <span>{siteConfig.personal.location}</span>
             </div>
 
             <h3 className="text-2xl font-display font-semibold text-foreground mb-4">
-              Ready to Launch Your Next Project?
+              {siteConfig.contact.headline}
             </h3>
             <p className="text-muted-foreground mb-8">
-              Whether you have a project in mind, want to collaborate, or just want to say hello, 
-              I'd love to hear from you. Let's make something extraordinary together!
+              {siteConfig.contact.description}
             </p>
 
             <div className="space-y-4">
@@ -109,16 +110,14 @@ const ContactSection = () => {
                   whileHover={{ x: 5 }}
                   className="flex items-center gap-4 p-4 glass-card hover:border-primary/30 transition-all group"
                 >
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                    link.color === 'primary' ? 'bg-primary/20' :
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center ${link.color === 'primary' ? 'bg-primary/20' :
                     link.color === 'secondary' ? 'bg-secondary/20' :
-                    'bg-accent/20'
-                  }`}>
-                    <link.icon className={`w-5 h-5 ${
-                      link.color === 'primary' ? 'text-primary' :
+                      'bg-accent/20'
+                    }`}>
+                    <link.icon className={`w-5 h-5 ${link.color === 'primary' ? 'text-primary' :
                       link.color === 'secondary' ? 'text-secondary' :
-                      'text-accent'
-                    }`} />
+                        'text-accent'
+                      }`} />
                   </div>
                   <div className="flex-1">
                     <p className="text-sm text-muted-foreground">{link.label}</p>
@@ -136,7 +135,7 @@ const ContactSection = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <form onSubmit={handleSubmit} className="glass-card p-8 space-y-6">
+            <form onSubmit={handleEmailClick} className="glass-card p-8 space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
                   Name

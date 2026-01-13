@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
 import { ExternalLink, BookOpen, Calendar, Clock } from 'lucide-react';
+import { siteConfig } from '../data/siteContent';
 
 interface BlogPost {
   title: string;
@@ -21,13 +22,14 @@ const BlogSection = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        const username = siteConfig.socials.medium.split('@').pop();
         // Using RSS2JSON API to fetch Medium RSS feed
         const response = await fetch(
-          'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@Harshodai'
+          `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${username}`
         );
         if (!response.ok) throw new Error('Failed to fetch blog posts');
         const data = await response.json();
-        
+
         if (data.status === 'ok') {
           setPosts(data.items.slice(0, 4));
         } else {
@@ -104,7 +106,7 @@ const BlogSection = () => {
               {error || 'No blog posts available yet'}
             </p>
             <a
-              href="https://medium.com/@Harshodai"
+              href={siteConfig.socials.medium}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium"
@@ -170,7 +172,7 @@ const BlogSection = () => {
           className="text-center mt-12"
         >
           <motion.a
-            href="https://medium.com/@Harshodai"
+            href={siteConfig.socials.medium}
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}

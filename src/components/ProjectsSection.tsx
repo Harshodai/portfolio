@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
 import { Github, ExternalLink, Star, GitFork, Folder } from 'lucide-react';
+import { siteConfig } from '../data/siteContent';
 
 interface Repository {
   id: number;
@@ -36,7 +37,8 @@ const ProjectsSection = () => {
   useEffect(() => {
     const fetchRepos = async () => {
       try {
-        const response = await fetch('https://api.github.com/users/Harshodai/repos?sort=updated&per_page=6');
+        const username = siteConfig.socials.github.split('/').pop();
+        const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`);
         if (!response.ok) throw new Error('Failed to fetch repositories');
         const data = await response.json();
         setRepos(data);
@@ -85,7 +87,7 @@ const ProjectsSection = () => {
             <Folder className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
             <p className="text-muted-foreground mb-4">{error}</p>
             <a
-              href="https://github.com/Harshodai"
+              href={siteConfig.socials.github}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium"
@@ -178,7 +180,7 @@ const ProjectsSection = () => {
           className="text-center mt-12"
         >
           <motion.a
-            href="https://github.com/Harshodai?tab=repositories"
+            href={`${siteConfig.socials.github}?tab=repositories`}
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}

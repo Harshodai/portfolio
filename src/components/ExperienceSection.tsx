@@ -2,51 +2,9 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { Building2, Calendar, ChevronDown, ChevronUp } from 'lucide-react';
+import { siteConfig } from '../data/siteContent';
 
-const experiences = [
-  {
-    company: 'JP Morgan Chase',
-    role: 'Software Engineer 2',
-    period: 'August 2025 – Present',
-    location: 'Hyderabad, India',
-    description: [
-      'Building ReAct-based Agentic AI Framework using LangGraph + OpenAI for autonomous code vulnerability detection',
-      'Targeting 70% reduction in remediation time with >90% patch validation accuracy',
-      'Implementing automated verification through AI-generated test cases and call graph analysis',
-      'Establishing CI pipelines projected to increase test coverage by 40-50%',
-    ],
-    color: 'primary',
-  },
-  {
-    company: 'Phenom People',
-    role: 'Data Engineer 1',
-    period: 'July 2023 – August 2025',
-    location: 'Hyderabad, India',
-    description: [
-      'Engineered real-time pipelines with Snowflake + Pinot-Trino achieving <3s query latency',
-      'Built CDC pipeline using AWS Glue Iceberg Catalog and Spark EMR across 5 products',
-      'Developed 4 Apache Flink + Kafka pipelines deployed in Kubernetes clusters',
-      'Automated workflows with Airflow reducing manual effort by 2 hours/week',
-      'Created 150+ low-latency queries supporting 1,100+ enterprise customers',
-      'Mentored 3 junior engineers on Apache Flink best practices',
-    ],
-    color: 'secondary',
-  },
-  {
-    company: 'Tiger Analytics',
-    role: 'Big Data Engineer',
-    period: 'March 2022 – December 2022',
-    location: 'Chennai, India',
-    description: [
-      'Built batch ETL pipeline in AWS with PySpark reducing runtime to 8 minutes',
-      'Implemented JSON-based configuration system for 30+ dynamic records',
-      'Deployed Spark jobs on EMR using Livy REST API for job orchestration',
-    ],
-    color: 'accent',
-  },
-];
-
-const ExperienceCard = ({ experience, index }: { experience: typeof experiences[0]; index: number }) => {
+const ExperienceCard = ({ experience, index }: { experience: typeof siteConfig.experiences[0]; index: number }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
@@ -61,24 +19,22 @@ const ExperienceCard = ({ experience, index }: { experience: typeof experiences[
     >
       {/* Timeline Connector */}
       <div className="absolute left-8 top-16 bottom-0 w-px bg-border hidden md:block" />
-      
+
       <div className="flex gap-6 items-start">
         {/* Timeline Dot */}
         <motion.div
           initial={{ scale: 0 }}
           animate={isInView ? { scale: 1 } : {}}
           transition={{ delay: index * 0.2 + 0.3 }}
-          className={`hidden md:flex w-16 h-16 rounded-full items-center justify-center shrink-0 ${
-            experience.color === 'primary' ? 'bg-primary/20 glow-primary' :
-            experience.color === 'secondary' ? 'bg-secondary/20 glow-secondary' :
-            'bg-accent/20 glow-accent'
-          }`}
+          className={`hidden md:flex w-16 h-16 rounded-full items-center justify-center shrink-0 ${experience.color === 'primary' ? 'bg-primary/20 glow-primary' :
+              experience.color === 'secondary' ? 'bg-secondary/20 glow-secondary' :
+                'bg-accent/20 glow-accent'
+            }`}
         >
-          <Building2 className={`w-6 h-6 ${
-            experience.color === 'primary' ? 'text-primary' :
-            experience.color === 'secondary' ? 'text-secondary' :
-            'text-accent'
-          }`} />
+          <Building2 className={`w-6 h-6 ${experience.color === 'primary' ? 'text-primary' :
+              experience.color === 'secondary' ? 'text-secondary' :
+                'text-accent'
+            }`} />
         </motion.div>
 
         {/* Card */}
@@ -88,11 +44,10 @@ const ExperienceCard = ({ experience, index }: { experience: typeof experiences[
               <h3 className="text-xl font-display font-semibold text-foreground">
                 {experience.role}
               </h3>
-              <p className={`font-medium ${
-                experience.color === 'primary' ? 'text-primary' :
-                experience.color === 'secondary' ? 'text-secondary' :
-                'text-accent'
-              }`}>
+              <p className={`font-medium ${experience.color === 'primary' ? 'text-primary' :
+                  experience.color === 'secondary' ? 'text-secondary' :
+                    'text-accent'
+                }`}>
                 {experience.company}
               </p>
             </div>
@@ -113,11 +68,10 @@ const ExperienceCard = ({ experience, index }: { experience: typeof experiences[
             <ul className="space-y-2">
               {experience.description.map((item, i) => (
                 <li key={i} className="flex items-start gap-2 text-muted-foreground text-sm">
-                  <span className={`mt-2 w-1.5 h-1.5 rounded-full shrink-0 ${
-                    experience.color === 'primary' ? 'bg-primary' :
-                    experience.color === 'secondary' ? 'bg-secondary' :
-                    'bg-accent'
-                  }`} />
+                  <span className={`mt-2 w-1.5 h-1.5 rounded-full shrink-0 ${experience.color === 'primary' ? 'bg-primary' :
+                      experience.color === 'secondary' ? 'bg-secondary' :
+                        'bg-accent'
+                    }`} />
                   {item}
                 </li>
               ))}
@@ -160,7 +114,7 @@ const ExperienceSection = () => {
         </motion.div>
 
         <div className="max-w-4xl mx-auto space-y-8">
-          {experiences.map((experience, index) => (
+          {siteConfig.experiences.map((experience, index) => (
             <ExperienceCard key={experience.company} experience={experience} index={index} />
           ))}
         </div>

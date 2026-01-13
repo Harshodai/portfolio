@@ -1,39 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-
-const skillCategories = [
-  {
-    name: 'Languages',
-    color: 'primary',
-    skills: ['Python', 'SQL', 'Java', 'Scala', 'Shell Script'],
-  },
-  {
-    name: 'Data Engineering',
-    color: 'secondary',
-    skills: ['Apache Spark', 'Apache Kafka', 'Apache Flink', 'Hadoop', 'HIVE', 'Snowflake'],
-  },
-  {
-    name: 'Cloud & DevOps',
-    color: 'accent',
-    skills: ['AWS', 'Docker', 'Kubernetes', 'Terraform', 'CI/CD', 'Git'],
-  },
-  {
-    name: 'Orchestration',
-    color: 'primary',
-    skills: ['Apache Airflow', 'Informatica', 'Argo Workflows'],
-  },
-  {
-    name: 'Databases',
-    color: 'secondary',
-    skills: ['PostgreSQL', 'MongoDB', 'Redis', 'Elasticsearch', 'DynamoDB'],
-  },
-  {
-    name: 'Tools & Others',
-    color: 'accent',
-    skills: ['Tableau', 'Grafana', 'Jira', 'Linux', 'REST APIs'],
-  },
-];
+import { siteConfig } from '../data/siteContent';
 
 const SkillsSection = () => {
   const ref = useRef(null);
@@ -58,7 +26,7 @@ const SkillsSection = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {skillCategories.map((category, categoryIndex) => (
+          {siteConfig.skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={category.name}
               initial={{ opacity: 0, y: 30 }}
@@ -66,11 +34,10 @@ const SkillsSection = () => {
               transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
               className="glass-card p-6 hover:border-primary/30 transition-all group"
             >
-              <h3 className={`text-lg font-display font-semibold mb-4 ${
-                category.color === 'primary' ? 'text-primary' :
-                category.color === 'secondary' ? 'text-secondary' :
-                'text-accent'
-              }`}>
+              <h3 className={`text-lg font-display font-semibold mb-4 ${category.color === 'primary' ? 'text-primary' :
+                  category.color === 'secondary' ? 'text-secondary' :
+                    'text-accent'
+                }`}>
                 {category.name}
               </h3>
 
@@ -82,13 +49,12 @@ const SkillsSection = () => {
                     animate={isInView ? { opacity: 1, scale: 1 } : {}}
                     transition={{ delay: categoryIndex * 0.1 + skillIndex * 0.05 + 0.2 }}
                     whileHover={{ scale: 1.05, y: -2 }}
-                    className={`px-3 py-1.5 rounded-full text-sm font-medium cursor-default transition-all ${
-                      category.color === 'primary' 
+                    className={`px-3 py-1.5 rounded-full text-sm font-medium cursor-default transition-all ${category.color === 'primary'
                         ? 'bg-primary/10 text-primary hover:bg-primary/20' :
-                      category.color === 'secondary' 
-                        ? 'bg-secondary/10 text-secondary hover:bg-secondary/20' :
-                        'bg-accent/10 text-accent hover:bg-accent/20'
-                    }`}
+                        category.color === 'secondary'
+                          ? 'bg-secondary/10 text-secondary hover:bg-secondary/20' :
+                          'bg-accent/10 text-accent hover:bg-accent/20'
+                      }`}
                   >
                     {skill}
                   </motion.span>

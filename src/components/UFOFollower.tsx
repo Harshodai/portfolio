@@ -5,11 +5,11 @@ const UFOFollower = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isHoveringInteractive, setIsHoveringInteractive] = useState(false);
   const lastHoverCheck = useRef(0);
-  
+
   // Motion values for mouse position
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  
+
   // Optimized spring physics - faster response, less lag
   const springConfig = { stiffness: 300, damping: 25, mass: 0.1 };
   const x = useSpring(mouseX, springConfig);
@@ -23,9 +23,9 @@ const UFOFollower = () => {
   // Throttled hover check
   const checkInteractive = useCallback((target: HTMLElement) => {
     const now = Date.now();
-    if (now - lastHoverCheck.current < 50) return; // Throttle to 50ms
+    if (now - lastHoverCheck.current < 100) return; // Increased throttle to 100ms
     lastHoverCheck.current = now;
-    
+
     const isInteractive = target.closest('a, button, [role="button"], input, textarea, select, [data-interactive]');
     setIsHoveringInteractive(!!isInteractive);
   }, []);
@@ -41,15 +41,15 @@ const UFOFollower = () => {
     const handleMouseMove = (e: MouseEvent) => {
       const currentTime = Date.now();
       const deltaTime = currentTime - lastTime;
-      
-      if (deltaTime > 0) {
+
+      // Throttle velocity calculation
+      if (deltaTime > 16) { // ~60fps cap
         const velocity = (e.clientX - lastX) / deltaTime * 100;
         velocityX.set(velocity);
+        lastX = e.clientX;
+        lastTime = currentTime;
       }
-      
-      lastX = e.clientX;
-      lastTime = currentTime;
-      
+
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
@@ -75,8 +75,8 @@ const UFOFollower = () => {
   return (
     <motion.div
       className="fixed top-0 left-0 z-[9999] pointer-events-none hidden md:block"
-      style={{ 
-        x, 
+      style={{
+        x,
         y,
         translateX: '-50%',
         translateY: '-50%',
@@ -95,14 +95,12 @@ const UFOFollower = () => {
         }}
         className="relative"
       >
-        {/* UFO Emoji with Glow Effect */}
+        {/* UFO Emoji - Removed expensive filters */}
         <span
           className="text-3xl block"
           style={{
-            filter: isHoveringInteractive
-              ? 'drop-shadow(0 0 15px rgba(139, 92, 246, 1)) drop-shadow(0 0 30px rgba(236, 72, 153, 0.8))'
-              : 'drop-shadow(0 0 8px rgba(139, 92, 246, 0.6))',
-            transition: 'filter 0.2s ease-out',
+            transform: isHoveringInteractive ? 'scale(1.1)' : 'scale(1)',
+            transition: 'transform 0.2s ease-out',
           }}
         >
           🛸
@@ -117,7 +115,7 @@ const UFOFollower = () => {
             width: isHoveringInteractive ? 28 : 20,
           }}
         >
-          <div 
+          <div
             className="w-full h-full rounded-b-full"
             style={{
               background: isHoveringInteractive
