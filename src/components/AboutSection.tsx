@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { MapPin, Calendar, Award, Code2 } from 'lucide-react';
+import profilePhoto from '@/assets/profile-photo.jpeg';
 
 const stats = [
   { label: 'Years Experience', value: '4+', icon: Calendar },
@@ -49,9 +50,13 @@ const AboutSection = () => {
                 className="absolute inset-4 border border-secondary/20 rounded-full"
               />
               
-              {/* Profile Placeholder */}
-              <div className="absolute inset-8 rounded-full bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 flex items-center justify-center glow-primary">
-                <span className="text-6xl md:text-7xl font-display font-bold text-gradient">H</span>
+              {/* Profile Photo */}
+              <div className="absolute inset-8 rounded-full overflow-hidden glow-primary">
+                <img 
+                  src={profilePhoto} 
+                  alt="Harshodai Kolluru"
+                  className="w-full h-full object-cover"
+                />
               </div>
 
               {/* Orbiting Dots */}

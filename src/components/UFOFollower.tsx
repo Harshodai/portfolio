@@ -1,23 +1,34 @@
 import { motion, useSpring, useMotionValue, useTransform } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 
 const UFOFollower = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isHoveringInteractive, setIsHoveringInteractive] = useState(false);
+  const lastHoverCheck = useRef(0);
   
   // Motion values for mouse position
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   
-  // Spring physics for smooth, floaty following
-  const springConfig = { stiffness: 150, damping: 15, mass: 0.5 };
+  // Optimized spring physics - faster response, less lag
+  const springConfig = { stiffness: 300, damping: 25, mass: 0.1 };
   const x = useSpring(mouseX, springConfig);
   const y = useSpring(mouseY, springConfig);
 
   // Track mouse velocity for tilt effect
   const velocityX = useMotionValue(0);
   const tilt = useTransform(velocityX, [-500, 0, 500], [-15, 0, 15]);
-  const smoothTilt = useSpring(tilt, { stiffness: 100, damping: 20 });
+  const smoothTilt = useSpring(tilt, { stiffness: 200, damping: 30 });
+
+  // Throttled hover check
+  const checkInteractive = useCallback((target: HTMLElement) => {
+    const now = Date.now();
+    if (now - lastHoverCheck.current < 50) return; // Throttle to 50ms
+    lastHoverCheck.current = now;
+    
+    const isInteractive = target.closest('a, button, [role="button"], input, textarea, select, [data-interactive]');
+    setIsHoveringInteractive(!!isInteractive);
+  }, []);
 
   useEffect(() => {
     // Only show on desktop
@@ -43,16 +54,14 @@ const UFOFollower = () => {
       mouseY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
 
-      // Check if hovering over interactive elements
-      const target = e.target as HTMLElement;
-      const isInteractive = target.closest('a, button, [role="button"], input, textarea, select, [data-interactive]');
-      setIsHoveringInteractive(!!isInteractive);
+      // Throttled check for interactive elements
+      checkInteractive(e.target as HTMLElement);
     };
 
     const handleMouseLeave = () => setIsVisible(false);
     const handleMouseEnter = () => setIsVisible(true);
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     document.body.addEventListener('mouseleave', handleMouseLeave);
     document.body.addEventListener('mouseenter', handleMouseEnter);
 
@@ -61,7 +70,7 @@ const UFOFollower = () => {
       document.body.removeEventListener('mouseleave', handleMouseLeave);
       document.body.removeEventListener('mouseenter', handleMouseEnter);
     };
-  }, [mouseX, mouseY, velocityX, isVisible]);
+  }, [mouseX, mouseY, velocityX, isVisible, checkInteractive]);
 
   return (
     <motion.div
@@ -71,110 +80,84 @@ const UFOFollower = () => {
         y,
         translateX: '-50%',
         translateY: '-50%',
+        willChange: 'transform',
       }}
       animate={{ opacity: isVisible ? 1 : 0 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.15 }}
     >
       <motion.div
         style={{ rotate: smoothTilt }}
         animate={{
-          y: [0, -5, 0],
-          scale: isHoveringInteractive ? 1.3 : 1,
+          scale: isHoveringInteractive ? 1.2 : 1,
         }}
         transition={{
-          y: {
-            duration: 2,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          },
-          scale: {
-            duration: 0.2,
-            ease: 'easeOut',
-          },
+          scale: { duration: 0.15, ease: 'easeOut' },
         }}
         className="relative"
       >
         {/* UFO Emoji with Glow Effect */}
-        <motion.span
+        <span
           className="text-3xl block"
-          animate={{
+          style={{
             filter: isHoveringInteractive
-              ? [
-                  'drop-shadow(0 0 20px rgba(139, 92, 246, 1)) drop-shadow(0 0 40px rgba(236, 72, 153, 0.8))',
-                  'drop-shadow(0 0 30px rgba(139, 92, 246, 1)) drop-shadow(0 0 60px rgba(236, 72, 153, 1))',
-                  'drop-shadow(0 0 20px rgba(139, 92, 246, 1)) drop-shadow(0 0 40px rgba(236, 72, 153, 0.8))',
-                ]
-              : [
-                  'drop-shadow(0 0 10px rgba(139, 92, 246, 0.6))',
-                  'drop-shadow(0 0 25px rgba(139, 92, 246, 1))',
-                  'drop-shadow(0 0 10px rgba(139, 92, 246, 0.6))',
-                ],
-          }}
-          transition={{
-            duration: isHoveringInteractive ? 0.5 : 1.5,
-            repeat: Infinity,
-            ease: 'easeInOut',
+              ? 'drop-shadow(0 0 15px rgba(139, 92, 246, 1)) drop-shadow(0 0 30px rgba(236, 72, 153, 0.8))'
+              : 'drop-shadow(0 0 8px rgba(139, 92, 246, 0.6))',
+            transition: 'filter 0.2s ease-out',
           }}
         >
           🛸
-        </motion.span>
+        </span>
 
-        {/* Tractor Beam Effect - Enhanced when hovering interactive */}
-        <motion.div
-          className="absolute top-full left-1/2 -translate-x-1/2"
-          animate={{
-            opacity: isHoveringInteractive ? [0.6, 1, 0.6] : [0.4, 0.8, 0.4],
-            height: isHoveringInteractive ? [25, 45, 25] : [15, 25, 15],
-            width: isHoveringInteractive ? 32 : 24,
-          }}
-          transition={{
-            duration: isHoveringInteractive ? 0.8 : 1.5,
-            repeat: Infinity,
-            ease: 'easeInOut',
+        {/* Tractor Beam Effect - Simplified */}
+        <div
+          className="absolute top-full left-1/2 -translate-x-1/2 transition-all duration-200"
+          style={{
+            opacity: isHoveringInteractive ? 0.8 : 0.5,
+            height: isHoveringInteractive ? 35 : 20,
+            width: isHoveringInteractive ? 28 : 20,
           }}
         >
           <div 
             className="w-full h-full rounded-b-full"
             style={{
               background: isHoveringInteractive
-                ? 'linear-gradient(to bottom, hsl(var(--primary) / 0.9), hsl(280 100% 60% / 0.6), hsl(var(--secondary) / 0.4), transparent)'
-                : 'linear-gradient(to bottom, hsl(var(--primary) / 0.7), hsl(var(--secondary) / 0.4), transparent)',
+                ? 'linear-gradient(to bottom, hsl(var(--primary) / 0.8), hsl(var(--secondary) / 0.4), transparent)'
+                : 'linear-gradient(to bottom, hsl(var(--primary) / 0.6), transparent)',
             }}
           />
-        </motion.div>
+        </div>
 
-        {/* Sparkle Particles - More when hovering */}
-        {[...Array(isHoveringInteractive ? 6 : 4)].map((_, i) => (
+        {/* Sparkle Particles - Reduced count */}
+        {[0, 1, 2].map((i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 rounded-full"
             style={{
-              left: `${10 + i * 15}%`,
+              left: `${20 + i * 25}%`,
               top: '110%',
               backgroundColor: i % 2 === 0 ? 'hsl(var(--primary))' : 'hsl(var(--secondary))',
             }}
             animate={{
-              y: [0, isHoveringInteractive ? 35 : 20, 0],
-              opacity: [0, 1, 0],
-              scale: [0.5, isHoveringInteractive ? 1.5 : 1, 0.5],
+              y: [0, isHoveringInteractive ? 25 : 15, 0],
+              opacity: [0, 0.8, 0],
             }}
             transition={{
-              duration: isHoveringInteractive ? 0.6 : 1,
+              duration: 0.8,
               repeat: Infinity,
-              delay: i * 0.15,
+              delay: i * 0.2,
               ease: 'easeOut',
             }}
           />
         ))}
 
-        {/* Extra ring effect when hovering interactive elements */}
+        {/* Ring effect when hovering interactive elements */}
         {isHoveringInteractive && (
           <motion.div
-            className="absolute inset-0 rounded-full border-2 border-primary/50"
-            initial={{ scale: 1, opacity: 0.8 }}
-            animate={{ scale: 2.5, opacity: 0 }}
+            className="absolute rounded-full border border-primary/40"
+            initial={{ scale: 1, opacity: 0.6 }}
+            animate={{ scale: 2, opacity: 0 }}
             transition={{
-              duration: 0.8,
+              duration: 0.6,
               repeat: Infinity,
               ease: 'easeOut',
             }}
@@ -183,8 +166,8 @@ const UFOFollower = () => {
               top: '50%',
               translateX: '-50%',
               translateY: '-50%',
-              width: 40,
-              height: 40,
+              width: 35,
+              height: 35,
             }}
           />
         )}
