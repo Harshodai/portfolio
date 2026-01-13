@@ -13,7 +13,7 @@ import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import LoadingScreen from '@/components/LoadingScreen';
 import UFOFollower from '@/components/UFOFollower';
-
+import ScrollToTop from '@/components/ScrollToTop';
 // Parallax wrapper component
 const ParallaxLayer = ({ children, speed = 0.5 }: { children: React.ReactNode; speed?: number }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -78,6 +78,9 @@ const Index = () => {
 
       {/* Footer */}
       <Footer />
+      
+      {/* Scroll to Top Button */}
+      <ScrollToTop />
     </div>
   );
 };
