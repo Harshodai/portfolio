@@ -46,8 +46,8 @@ export const siteConfig = {
       "When I'm not coding, you can find me exploring the latest tech trends, reading about space exploration, or simply enjoying a good cup of coffee while pondering the mysteries of the universe.",
     ],
     stats: [
-      { label: 'Years Experience', value: '4+', icon: 'Calendar' },
-      { label: 'Technologies', value: '20+', icon: 'Code2' },
+      { label: 'Years Experience', value: '3+', icon: 'Calendar' },
+      { label: 'Technologies', value: '10+', icon: 'Code2' },
       { label: 'Awards', value: '3', icon: 'Award' },
     ],
   },
@@ -69,7 +69,7 @@ export const siteConfig = {
     {
       company: 'Phenom',
       role: 'Product Developer 2',
-      period: 'May 2022 – August 2024',
+      period: 'July 2023 – August 2025',
       location: 'Hyderabad, India',
       description: [
         'Architected and implemented a semantic search engine using Mongolass, increasing candidate discovery by 40%.',
@@ -81,7 +81,7 @@ export const siteConfig = {
     {
       company: 'Tiger Analytics',
       role: 'Data Engineer',
-      period: 'August 2021 – May 2022',
+      period: 'March 2022 – December 2022',
       location: 'Chennai, India',
       description: [
         'Developed ETL pipelines using PySpark and Airflow for processing TB-scale datasets.',
@@ -95,11 +95,10 @@ export const siteConfig = {
   // Skills section
   skillCategories: [
     { name: 'Languages', color: 'primary', skills: ['Python', 'SQL', 'Java'] },
-    { name: 'Big Data', color: 'secondary', skills: ['Spark', 'Hadoop', 'Hive', 'Kafka', 'Airflow', 'Databricks'] },
-    { name: 'Databases', color: 'tertiary', skills: ['PostgreSQL', 'MongoDB', 'Cassandra', 'Redis', 'Elasticsearch'] },
-    { name: 'Cloud & DevOps', color: 'quaternary', skills: ['AWS', 'Azure', 'Docker', 'Kubernetes', 'Jenkins', 'Terraform'] },
-    { name: 'AI & ML', color: 'primary', skills: ['TensorFlow', 'PyTorch', 'Scikit-learn', 'NLP', 'LLMs', 'LangChain'] },
-    { name: 'Web Dev', color: 'secondary', skills: ['React', 'Node.js', 'FastAPI', 'Flask', 'HTML/CSS', 'TypeScript'] },
+    { name: 'Big Data', color: 'secondary', skills: ['Spark', 'Kafka', 'Airflow', 'Apache Flink', 'Apache Iceberg'] },
+    { name: 'Databases', color: 'tertiary', skills: ['PostgreSQL', 'MongoDB', 'Elasticsearch'] },
+    { name: 'Cloud & DevOps', color: 'quaternary', skills: ['AWS', 'Terraform'] },
+    { name: 'AI & ML', color: 'primary', skills: ['LLMs', 'LangChain'] },
   ],
   
   // Achievements section
