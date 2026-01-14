@@ -36,21 +36,19 @@ const Navigation = () => {
     };
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    setIsOpen(false);
-
     const element = document.querySelector(href);
     if (element) {
-      // Calculate offset for fixed header
-      const headerOffset = 80;
+      const offset = 80;
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth'
+        behavior: "smooth"
       });
+      setIsOpen(false);
     }
   };
 
@@ -81,8 +79,8 @@ const Navigation = () => {
               href={item.href}
               onClick={(e) => handleNavClick(e, item.href)}
               className={`transition-colors text-sm font-medium relative group ${activeSection === item.href.substring(1)
-                  ? 'text-primary'
-                  : 'text-muted-foreground hover:text-foreground'
+                ? 'text-primary'
+                : 'text-muted-foreground hover:text-foreground'
                 }`}
               whileHover={{ y: -2 }}
             >
@@ -127,8 +125,8 @@ const Navigation = () => {
                   transition={{ delay: index * 0.05 }}
                   onClick={(e) => handleNavClick(e, item.href)}
                   className={`py-3 px-4 rounded-lg transition-colors ${activeSection === item.href.substring(1)
-                      ? 'text-primary bg-primary/10'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                    ? 'text-primary bg-primary/10'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                     }`}
                 >
                   {item.name}

@@ -8,11 +8,8 @@ const SkillsSection = () => {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="skills" className="py-32 relative" ref={ref}>
-      {/* Background Effect */}
-      <div className="absolute inset-0 nebula-bg opacity-50" />
-
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="skills" className="pt-24 pb-20 md:pt-16 md:pb-32 relative" ref={ref}>
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -35,8 +32,8 @@ const SkillsSection = () => {
               className="glass-card p-6 hover:border-primary/30 transition-all group"
             >
               <h3 className={`text-lg font-display font-semibold mb-4 ${category.color === 'primary' ? 'text-primary' :
-                  category.color === 'secondary' ? 'text-secondary' :
-                    'text-accent'
+                category.color === 'secondary' ? 'text-secondary' :
+                  'text-accent'
                 }`}>
                 {category.name}
               </h3>
@@ -50,10 +47,10 @@ const SkillsSection = () => {
                     transition={{ delay: categoryIndex * 0.1 + skillIndex * 0.05 + 0.2 }}
                     whileHover={{ scale: 1.05, y: -2 }}
                     className={`px-3 py-1.5 rounded-full text-sm font-medium cursor-default transition-all ${category.color === 'primary'
-                        ? 'bg-primary/10 text-primary hover:bg-primary/20' :
-                        category.color === 'secondary'
-                          ? 'bg-secondary/10 text-secondary hover:bg-secondary/20' :
-                          'bg-accent/10 text-accent hover:bg-accent/20'
+                      ? 'bg-primary/10 text-primary hover:bg-primary/20' :
+                      category.color === 'secondary'
+                        ? 'bg-secondary/10 text-secondary hover:bg-secondary/20' :
+                        'bg-accent/10 text-accent hover:bg-accent/20'
                       }`}
                   >
                     {skill}

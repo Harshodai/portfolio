@@ -60,33 +60,34 @@ export const siteConfig = {
       period: 'August 2025 – Present',
       location: 'Hyderabad, India',
       description: [
-        'Building ReAct-based Agentic AI Framework to automate complex workflows.',
-        'Developing scalable data pipelines efficiently handling large datasets.',
-        'Optimizing system performance and reliability through rigorous testing and monitoring.',
+        'Developing a scalable, config-driven Agentic AI Framework (LangGraph + OpenAI) to autonomously detect and fix code vulnerabilities.',
+        'Targeting 70% reduction in remediation time and >90% patch validation accuracy.',
+        'Integrating automated verification with AI-generated test cases and context-aware call graphs.',
       ],
       color: 'primary',
     },
     {
       company: 'Phenom',
-      role: 'Product Developer 2',
+      role: 'Data Engineer 1',
       period: 'July 2023 – August 2025',
       location: 'Hyderabad, India',
       description: [
-        'Architected and implemented a semantic search engine using Mongolass, increasing candidate discovery by 40%.',
-        'Built a Resume parsing pipeline processing 50k+ resumes daily with high accuracy.',
-        'Developed a real-time notification system serving 1M+ users.',
+        'Optimized data pipelines (Snowflake, Pinot-Trino) achieving <3s query latencies.',
+        'Implemented CDC pipelines using AWS Glue, Iceberg, and Spark EMR.',
+        'Built real-time pipelines with Apache Flink and Kafka on Kubernetes.',
+        'Automated tenant onboarding using Airflow, Python, and MongoDB.',
       ],
       color: 'secondary',
     },
     {
       company: 'Tiger Analytics',
-      role: 'Data Engineer',
+      role: 'Big Data Engineer',
       period: 'March 2022 – December 2022',
       location: 'Chennai, India',
       description: [
-        'Developed ETL pipelines using PySpark and Airflow for processing TB-scale datasets.',
-        'Optimized SQL queries reducing report generation time by 60%.',
-        ' implemented data quality checks ensuring 99.9% data integrity.',
+        'Developed PySpark ETL pipelines in AWS, reducing execution time to 8 minutes.',
+        'Optimized Spark jobs using JSON configurations and EMR/Livy.',
+        'Implemented data quality checks ensuring 99.9% data integrity.',
       ],
       color: 'tertiary',
     },
@@ -95,30 +96,30 @@ export const siteConfig = {
   // Skills section
   skillCategories: [
     { name: 'Languages', color: 'primary', skills: ['Python', 'SQL', 'Java'] },
-    { name: 'Big Data', color: 'secondary', skills: ['Spark', 'Kafka', 'Airflow', 'Trino', 'Apache Flink', 'Apache Iceberg'] },
-    { name: 'Databases', color: 'tertiary', skills: ['PostgreSQL', 'MongoDB', 'Elasticsearch'] },
-    { name: 'Cloud & DevOps', color: 'quaternary', skills: ['AWS', 'Terraform'] },
-    { name: 'AI & ML', color: 'primary', skills: ['LLMs', 'LangChain'] },
+    { name: 'Big Data', color: 'secondary', skills: ['Apache Iceberg', 'Spark', 'Kafka', 'Flink', 'Pinot', 'Trino', 'Airflow'] },
+    { name: 'Databases', color: 'tertiary', skills: ['Snowflake', 'PostgreSQL', 'MongoDB', 'Elasticsearch'] },
+    { name: 'Cloud & DevOps', color: 'quaternary', skills: ['AWS', 'Terraform', 'Kubernetes'] },
+    { name: 'AI & ML', color: 'primary', skills: ['LLMs', 'LangChain', 'OpenAI', 'Agentic AI'] },
   ],
 
   // Achievements section
   achievements: [
     {
       icon: 'Award',
-      title: 'Phenomenal CRISP Award at Phenom',
-      description: 'Awarded for exceptional problem-solving skills and delivering high-impact features.',
+      title: '1st Prize in IoT Presentation',
+      description: 'Won 1st prize at Medha 2018 for IoT Presentation.',
       color: 'primary'
     },
     {
       icon: 'Star',
-      title: 'Star Performer at Tiger Analytics',
-      description: 'Recognized for consistent high performance and contribution to team success.',
+      title: '2nd Prize in Heart Attack Detection',
+      description: 'Secured 2nd prize in Heart Attack Detection Slide Evince at NIPUNA 2019.',
       color: 'secondary'
     },
     {
       icon: 'Trophy',
-      title: 'Hackathon Winner',
-      description: 'Won 1st place in the internal innovation hackathon for building an AI-powered documentation assistant.',
+      title: 'Phenomenal CRISP Award Nominee',
+      description: 'Nominated for Phenomenal CRISP Awards at Phenom.',
       color: 'tertiary'
     },
   ],

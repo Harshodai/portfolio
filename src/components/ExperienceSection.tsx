@@ -27,13 +27,13 @@ const ExperienceCard = ({ experience, index }: { experience: typeof siteConfig.e
           animate={isInView ? { scale: 1 } : {}}
           transition={{ delay: index * 0.2 + 0.3 }}
           className={`hidden md:flex w-16 h-16 rounded-full items-center justify-center shrink-0 ${experience.color === 'primary' ? 'bg-primary/20 glow-primary' :
-              experience.color === 'secondary' ? 'bg-secondary/20 glow-secondary' :
-                'bg-accent/20 glow-accent'
+            experience.color === 'secondary' ? 'bg-secondary/20 glow-secondary' :
+              'bg-accent/20 glow-accent'
             }`}
         >
           <Building2 className={`w-6 h-6 ${experience.color === 'primary' ? 'text-primary' :
-              experience.color === 'secondary' ? 'text-secondary' :
-                'text-accent'
+            experience.color === 'secondary' ? 'text-secondary' :
+              'text-accent'
             }`} />
         </motion.div>
 
@@ -45,8 +45,8 @@ const ExperienceCard = ({ experience, index }: { experience: typeof siteConfig.e
                 {experience.role}
               </h3>
               <p className={`font-medium ${experience.color === 'primary' ? 'text-primary' :
-                  experience.color === 'secondary' ? 'text-secondary' :
-                    'text-accent'
+                experience.color === 'secondary' ? 'text-secondary' :
+                  'text-accent'
                 }`}>
                 {experience.company}
               </p>
@@ -69,8 +69,8 @@ const ExperienceCard = ({ experience, index }: { experience: typeof siteConfig.e
               {experience.description.map((item, i) => (
                 <li key={i} className="flex items-start gap-2 text-muted-foreground text-sm">
                   <span className={`mt-2 w-1.5 h-1.5 rounded-full shrink-0 ${experience.color === 'primary' ? 'bg-primary' :
-                      experience.color === 'secondary' ? 'bg-secondary' :
-                        'bg-accent'
+                    experience.color === 'secondary' ? 'bg-secondary' :
+                      'bg-accent'
                     }`} />
                   {item}
                 </li>
@@ -99,8 +99,8 @@ const ExperienceSection = () => {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="experience" className="py-32 relative" ref={ref}>
-      <div className="container mx-auto px-6">
+    <section id="experience" className="pt-24 pb-20 md:pt-16 md:pb-32 relative" ref={ref}>
+      <div className="container mx-auto px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
