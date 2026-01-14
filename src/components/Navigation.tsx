@@ -38,17 +38,29 @@ const Navigation = () => {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    const element = document.querySelector(href);
-    if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
+    e.stopPropagation();
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+    const doScroll = () => {
+      const element = document.querySelector(href);
+      if (element) {
+        const offset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    };
+
+    if (isOpen) {
       setIsOpen(false);
+      // Wait for menu close animation on mobile
+      setTimeout(doScroll, 300);
+    } else {
+      // Instant scroll on desktop
+      doScroll();
     }
   };
 

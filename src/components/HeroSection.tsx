@@ -42,24 +42,26 @@ const HeroSection = () => {
       <div className="absolute inset-0 nebula-bg" />
 
       {/* Enhanced Floating Elements with More Dynamic Animations */}
-      <motion.div
-        className="absolute top-20 left-10 w-32 h-32 rounded-full bg-primary/10 blur-3xl"
-        animate={{
-          y: [0, -30, 0],
-          x: [0, 20, 0],
-          scale: [1, 1.1, 1],
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <motion.div
-        className="absolute bottom-40 right-20 w-48 h-48 rounded-full bg-secondary/10 blur-3xl"
-        animate={{
-          y: [0, 20, 0],
-          x: [0, -30, 0],
-          scale: [1, 1.2, 1],
-        }}
-        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-      />
+      <div className="hidden md:block">
+        <motion.div
+          className="absolute top-20 left-10 w-32 h-32 rounded-full bg-primary/10 blur-3xl"
+          animate={{
+            y: [0, -30, 0],
+            x: [0, 20, 0],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute bottom-40 right-20 w-48 h-48 rounded-full bg-secondary/10 blur-3xl"
+          animate={{
+            y: [0, 20, 0],
+            x: [0, -30, 0],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </div>
       <motion.div
         className="absolute top-1/3 right-1/4 w-24 h-24 rounded-full bg-accent/10 blur-2xl"
         animate={{
@@ -68,23 +70,7 @@ const HeroSection = () => {
         }}
         transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
       />
-      {/* Additional floating orbs */}
-      <motion.div
-        className="absolute top-1/2 left-1/4 w-16 h-16 rounded-full bg-primary/20 blur-2xl"
-        animate={{
-          y: [0, -40, 0],
-          rotate: [0, 180, 360],
-        }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/3 w-20 h-20 rounded-full bg-secondary/15 blur-2xl"
-        animate={{
-          x: [0, 30, 0],
-          scale: [1, 1.4, 1],
-        }}
-        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
-      />
+      {/* Reduced complexity: Removed extra floating orbs for performance */}
 
       <motion.div
         className="container mx-auto px-6 text-center relative z-10"

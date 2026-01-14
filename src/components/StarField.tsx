@@ -28,7 +28,9 @@ const StarField = () => {
 
     // Create stars
     const stars: Star[] = [];
-    const numStars = 200;
+    // Reduce star count significantly for performance
+    const isMobile = window.innerWidth < 768;
+    const numStars = isMobile ? 40 : 100;
 
     for (let i = 0; i < numStars; i++) {
       stars.push({
@@ -48,7 +50,7 @@ const StarField = () => {
       stars.forEach((star) => {
         // Twinkle effect
         const twinkle = Math.sin(Date.now() * 0.001 * star.speed) * 0.3 + 0.7;
-        
+
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity * twinkle})`;
