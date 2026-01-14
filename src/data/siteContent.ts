@@ -6,7 +6,7 @@ export const siteConfig = {
     firstName: 'Harshodai',
     email: 'kharshaengineer@gmail.com',
     location: 'Hyderabad, India',
-    resumePath: `${import.meta.env.BASE_URL}Kolluru_Harshodai_Resume.pdf`,
+    resumePath: 'Kolluru_Harshodai_Resume.pdf',
   },
 
   // Social Links (used in Hero, Footer, Contact)
